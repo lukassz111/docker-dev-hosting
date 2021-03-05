@@ -1,4 +1,4 @@
-FROM php:7.2.7-fpm-alpine3.7
+FROM php:7.3.27-fpm-alpine
 RUN apk update; \
     apk upgrade;
 RUN docker-php-ext-install mysqli
@@ -10,3 +10,7 @@ RUN docker-php-ext-install pdo
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mbstring
 USER root
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php
+RUN php -r "unlink('composer-setup.php');"
+RUN apk add git
