@@ -11,6 +11,6 @@ RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mbstring
 USER root
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php
+RUN php composer-setup.php --install-dir=/bin --filename composer
 RUN php -r "unlink('composer-setup.php');"
 RUN apk add git
