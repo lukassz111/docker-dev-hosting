@@ -7,4 +7,5 @@ then
     echo "Service $service_name not enabled, in first you need to start it"
     sudo docker-compose ps
 fi
+echo "[$service_name, run command] $command"
 sudo docker-compose exec $service_name $command
