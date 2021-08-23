@@ -1,5 +1,5 @@
 #/bin/bash
-sudo docker-compose stop
-sudo docker-compose rm
-sudo docker-compose build
-sudo docker-compose up --no-start
+docker-compose stop
+docker-compose rm
+docker-compose build
+docker-compose up --no-start
