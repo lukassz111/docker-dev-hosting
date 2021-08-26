@@ -1,5 +1,6 @@
 #!/bin/bash
-apk add openssl
+apt-get update
+apt-get install -y openssl
 
 cat >> openssl.cnf <<EOF
 [ req ]
