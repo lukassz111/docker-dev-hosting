@@ -7,6 +7,12 @@ RUN apt-get update; \
 
 RUN docker-php-ext-install mysqli gd opcache pdo pdo_mysql mbstring zip
 
+USER root
+COPY openssl_configure.sh /home/docker_openssl_configure.sh
+RUN chmod +x /home/docker_openssl_configure.sh
+RUN /home/docker_openssl_configure.sh
+#RUN rm /home/docker_openssl_configure.sh
+
 #Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
     php composer-setup.php --install-dir=/bin --filename composer; \
@@ -21,20 +27,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
 #RUN drush
 
 #Config apache
-RUN a2enmod rewrite
+RUN a2enmod rewrite deflate proxy proxy_fcgi ssl
+# socache socache_shmcb
 RUN service apache2 restart
 
-
-RUN apt-get update; \
-    apt-get upgrade -y; \
-    apt-get autoremove -y
-# Copy apache vhost file to proxy php requests to php-fpm container
-COPY apache.conf /usr/local/apache2/conf/docker.apache.conf
-COPY openssl_configure.sh /usr/local/apache2/docker_openssl_configure.sh
-RUN chmod +x /usr/local/apache2/docker_openssl_configure.sh
-RUN /usr/local/apache2/docker_openssl_configure.sh
-RUN rm /usr/local/apache2/docker_openssl_configure.sh
-USER root
-RUN echo "Include /usr/local/apache2/conf/docker.apache.conf" >> /usr/local/apache2/conf/httpd.conf
+COPY apache.conf /etc/apache2/conf-enabled/docker.apache.conf
+#RUN echo "Include /usr/local/apache2/conf/docker.apache.conf" >> /usr/local/apache2/conf/httpd.conf
 
 #RUN echo "<?php phpinfo(); ?>" > /var/www/html/index.php

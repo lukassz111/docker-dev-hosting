@@ -17,6 +17,6 @@ CN = Common Name
 emailAddress = test@email.com
 EOF
 
-openssl req -config openssl.cnf -x509 -nodes -days 1095 -newkey rsa:2048 -out /usr/local/apache2/conf/server.crt -keyout /usr/local/apache2/conf/server.key
+openssl req -config openssl.cnf -x509 -nodes -days 1095 -newkey rsa:2048 -out /etc/apache2/server.crt -keyout /etc/apache2/server.key
 
 rm openssl.cnf
